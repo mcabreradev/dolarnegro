@@ -13,21 +13,25 @@ const router = new Router();
 const url = "https://monitordolarvenezuela.com/";
 
 router.get("/", async (ctx) => {
-  let prices = [];
+  let prices = {};
   try {
     const data = await rp(url);
     const $ = cheerio.load(data);
-    const tabla = $("as-white-tabla");
-    tabla.find("div.box-prices").each(function (i, elem) {
-      prices.push({
-        tipo: $(elem).eq(0).text(),
-        monto: $(elem).eq(1).text()
-      });
+    const tabla = $(".as-white-tabla > div.box-prices");
+
+    tabla.each(function (i, elem) {
+      let monitor = $(elem).find('.col-12.col-lg-5').text().replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g,'');
+      let price = $(elem).find('.col-6.col-lg-4').text();
+
+      prices = {
+        ...prices,
+        [monitor]: price
+      };
+
     });
 
-    // prices.push(tabla);
     ctx.body = ctx.body = {
-      data: prices
+      usd: prices
     };
   } catch (error) {
     console.log(error);
