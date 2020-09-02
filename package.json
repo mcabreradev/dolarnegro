@@ -8,7 +8,8 @@
   "version": "1.0.0",
   "license": "GPL-3.0",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js "
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
@@ -19,8 +20,12 @@
     "koa-bodyparser": "^4.2.1",
     "koa-logger": "^3.2.1",
     "koa-router": "^7.4.0",
+    "pm2": "^4.4.1",
     "request": "2.88.2",
     "request-promise": "4.2.6"
   },
-  "keywords": []
+  "keywords": [],
+  "engines": {
+    "node": "14.x"
+  }
 }
