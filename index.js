@@ -20,18 +20,22 @@ router.get("/", async (ctx) => {
     const tabla = $(".as-white-tabla > div.box-prices");
 
     tabla.each(function (i, elem) {
-      let monitor = $(elem).find('.col-12.col-lg-5').text().replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g,'');
-      let price = $(elem).find('.col-6.col-lg-4').text();
+      let monitor = $(elem)
+        .find(".col-12.col-lg-5")
+        .text()
+        .replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, "");
+      let price = $(elem).find(".col-6.col-lg-4").text();
+
+      if (parseFloat(price) < 1) return;
 
       prices = {
         ...prices,
-        [monitor]: price
+        [monitor]: price,
       };
-
     });
 
     ctx.body = ctx.body = {
-      usd: prices
+      usd: prices,
     };
   } catch (error) {
     console.log(error);
